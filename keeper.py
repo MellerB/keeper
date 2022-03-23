@@ -30,7 +30,7 @@ def run(fun, data_structure, filename ,iterations_number = 5000, save_period=60)
     start = time.time()
 
     for i in range(current_iteration,iterations_number):
-        data=fun(data)
+        data=fun(data,i)
 
         if  time.time()-start >= save_period or i == iterations_number-1: 
             jdata["data"] = data
