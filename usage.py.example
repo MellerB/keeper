@@ -1,0 +1,33 @@
+mask2 = mask_model_2()
+temps2 = init_model_2(t1,t2)
+heatvar2 = []
+
+
+ds2 = {}
+ds2["temps"] = temps1
+ds2["heatvar"] = heatvar2
+
+
+def sim2_step(data):
+    temps = data["temps"]
+    heatvar = data["heatsum"]
+
+    temps = propagate(temps, mask2)
+    temps = heat_model_2(temps,i)
+    heatvar.append(np.sum(temps))
+
+    data["temps"] = temps
+    data["heatvar"] = heatvar
+    return data
+
+
+run(sim2_step, ds2, "sim2.bin" ,iterations_number = 50000, save_period=10)
+t = get("sim2.bin")
+temps2 = t["temps"] 
+heatsum2 = t["heatsum"]
+
+sns.heatmap(temps2,vmin=0,vmax=t1)
+plt.show()
+
+sns.lineplot(range(len(heatsum1)),heatsum1)
+plt.show()
